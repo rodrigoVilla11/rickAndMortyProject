@@ -1,3 +1,4 @@
+import React from 'react'
 import Card from './Card';
 import styled from 'styled-components'
 
@@ -9,17 +10,17 @@ display: flex;
 justify-content: space-evenly;
 `
 
-export default function Cards(props) {
-   const { characters } = props;
+export default function Cards({characters, onClose}) {
    return <DivOtherCharacters>
-      {characters.map(({name, species, gender, image})=>{
+      {characters.map(({id, name, species, gender, image})=>{
          return <OtherCharacters>
         <Card  
+        id = {id}
         name = {name}
         species = {species}
         gender = {gender}
         image = {image}
-        onClose={() => window.alert('Emulamos que se cierra la card')}
+        onClose={onClose}
         /></OtherCharacters>
       })}
    </DivOtherCharacters>;

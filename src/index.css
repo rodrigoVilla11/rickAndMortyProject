@@ -5,9 +5,20 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+   background-image: url(./components/wallpaper/fondo-de-pantalla-de-1920x1080.-wallpaper-hd-1080p-de-rick-y-morty.jpg);
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-attachment: fixed;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@font-face {
+  font-family: 'get_schwifty';
+  src: url('./components/tipografia/get_schwifty.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
 }

@@ -1,33 +1,38 @@
 import './App.css'
-import Card from './components/Card.jsx'
 import Cards from './components/Cards.jsx'
-import SearchBar from './components/SearchBar.jsx'
-import characters, { Rick } from './data.js'
+import Nav from './components/Nav'
+import { useState } from 'react'
 
 function App () {
+  const [characters, setCharacters] = useState([]);
+
+  const onSearch = (character) => {
+    const KEY = '86334f583361.82f001e1c09131539161'
+    const URL_BASE = "https://be-a-rym.up.railway.app/api";
+    fetch(`${URL_BASE}/character/${character}?key=${KEY}`)
+       .then((response) => response.json())
+       .then((data) => {
+          if (data.name && !characters.find((char) => char.id === data.id)) {
+             setCharacters((oldChars) => [...oldChars, data]);
+          } else {
+             window.alert('No hay personajes con ese ID');
+          }
+       });
+ }
+
+ const onClose = (id) => {
+  setCharacters(
+    characters.filter((char)=> char.id !== id)
+  )
+ }
+
   return (
     <div className='App' style={{ padding: '25px'}}>
-      <div>
-        <Card
-          name={Rick.name}
-          species={Rick.species}
-          gender={Rick.gender}
-          image={Rick.image}
-          onClose={() => window.alert('Emulamos que se cierra la card')}
-        />
-      </div>
-      <hr />
-      <div>
-        <Cards
-          characters={characters}
-        />
-      </div>
-      <hr />
-      <div>
-        <SearchBar
-          onSearch={(characterID) => window.alert(characterID)}
-        />
-      </div>
+      <Nav onSearch={onSearch}/>
+      <Cards
+        characters={characters}
+        onClose={onClose}
+      />
     </div>
   )
 }
