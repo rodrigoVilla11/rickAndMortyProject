@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const DivCard = styled.div`
    border: solid 1px;
@@ -61,7 +62,7 @@ export default function Card(/*props*/{id, name, species, gender, image, onClose
    return (
       <DivCard>
           <ButtonX onClick={() => onClose(id)}>X</ButtonX>
-          <NameCard>{/*props. de vuelta el destructring para usar solo lo que necesitamos*/name}</NameCard> 
+          <NameCard><Link to={`/detail/${id}`}style={{textDecoration: 'none', color: 'white'}}>{/*props. de vuelta el destructring para usar solo lo que necesitamos*/name}</Link></NameCard> 
           <ImgBetter  src={image} alt={name} /> 
             <OtherH2>{species}</OtherH2><OtherH2>{gender}</OtherH2> 
       </DivCard>

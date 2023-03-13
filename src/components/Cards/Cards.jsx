@@ -20,7 +20,8 @@ export default function Cards({characters, onClose}) {
         species = {species}
         gender = {gender}
         image = {image}
-        onClose={onClose}
+        onClose={() => onClose(id)}
+        key ={id}
         /></OtherCharacters>
       })}
    </DivOtherCharacters>;
