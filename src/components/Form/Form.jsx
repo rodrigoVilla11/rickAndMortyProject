@@ -89,15 +89,16 @@ export default function Form ({login}) {
             <Title>RICK</Title> <TitleAnd>AND</TitleAnd> <Title>MORTY</Title>
         </Titles>
                 <DivUsername><label htmlFor="username">Username: </label>
-                    <input onChange={handleInputChange} type="text" name="username" value={userData.username} />
-                    <Errors>{errors.username}</Errors>
+                    <input onChange={handleInputChange} type="text" name="username" value={userData.username} />     
                     </DivUsername>
                 <DivPassword>
                     <label htmlFor="password">Password: </label>
                     <input onChange={handleInputChange} type="password" name="password" value={userData.password} />
-                    <Errors>{errors.username}</Errors>
                     </DivPassword>
-                    
+                    <Errors> 
+                        {errors.username}
+                        {errors.password}
+                    </Errors>
                 <LogInButton type="submit">Login</LogInButton>
             </FormLogIn>
     )

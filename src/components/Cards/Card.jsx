@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import styles from './beatingHeart.module.css'
 import { Link } from 'react-router-dom'
 import {addCharacter, removeCharacter} from   '../../redux/actions'
 import { connect } from 'react-redux'
@@ -71,6 +72,7 @@ margin-right: 30%;
 }
 `
 
+
  export function Card(props, {id, name, species, gender, image, onClose}) { //usar destructuring para directamene agarrar lo que necesitamos
    const [isFav, setIsFav] = useState(false)
   const handleFavorite = () => {
@@ -93,7 +95,7 @@ margin-right: 30%;
 
    return (
       <DivCard>
-         {isFav ? (<HearthButton onClick={handleFavorite}>❤️</HearthButton>) : (<HearthButton onClick={handleFavorite}>🤍</HearthButton>)}
+         {isFav ? (<HearthButton onClick={handleFavorite}><span className={styles.heart}>❤️</span></HearthButton>) : (<HearthButton onClick={handleFavorite}><span>🤍</span></HearthButton>)}
           <ButtonX onClick={() => props.onClose(id)}>X</ButtonX>
           <NameCard><Link to={`/detail/${props.id}`}style={{textDecoration: 'none', color: 'white'}}>{/*props. de vuelta el destructring para usar solo lo que necesitamos*/props.name}</Link></NameCard> 
           <ImgBetter  src={props.image} alt={props.name} /> 

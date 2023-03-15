@@ -1,0 +1,12 @@
+.heart {
+    animation: heart .5s infinite alternate linear;
+}
+
+@keyframes heart {
+    from{
+        transform: scale(.7);
+    }
+    to{
+        transform: scale(1);
+    }
+}
