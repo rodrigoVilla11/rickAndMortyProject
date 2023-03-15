@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import {addCharacter, removeCharacter} from   '../../redux/actions'
+import { connect } from 'react-redux'
 
 const DivCard = styled.div`
    border: solid 1px;
@@ -28,12 +30,12 @@ const ImgBetter = styled.img`
    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 `
 const ButtonX = styled.button`
-   margin-left: 80%;
-   margin-top: 10px;
-   margin-bottom: 0px;
+display: inline-flex;
+font-size: 0.8em;
    color: black;
    background-color: #08C952;
    border-radius: 15px;
+   margin-left: 30%;
    &:hover{
       cursor: pointer;
    }
@@ -58,13 +60,61 @@ const OtherH2 = styled.h2`
    text-shadow: 4px 4px 2px rgba(0,0,0,0.6);
 `
 
-export default function Card(/*props*/{id, name, species, gender, image, onClose}) { //usar destructuring para directamene agarrar lo que necesitamos
+const HearthButton = styled.button`
+display: inline-flex;
+background: none;
+border: none;
+font-size: 1.2em;
+margin-right: 30%;
+&:hover{
+   cursor: pointer;
+}
+`
+
+ export function Card(props, {id, name, species, gender, image, onClose}) { //usar destructuring para directamene agarrar lo que necesitamos
+   const [isFav, setIsFav] = useState(false)
+  const handleFavorite = () => {
+      if (isFav) {
+         setIsFav(false);
+         props.removeCharacter(props.id);
+      }else{
+         setIsFav(true);
+         props.addCharacter(props);
+      }
+   }
+
+   useEffect(() => {
+      props.myFavorites.forEach((fav) => {
+         if (fav.id === props.id) {
+            setIsFav(true);
+         }
+      });
+   }, [props.myFavorites]);
+
    return (
       <DivCard>
-          <ButtonX onClick={() => onClose(id)}>X</ButtonX>
-          <NameCard><Link to={`/detail/${id}`}style={{textDecoration: 'none', color: 'white'}}>{/*props. de vuelta el destructring para usar solo lo que necesitamos*/name}</Link></NameCard> 
-          <ImgBetter  src={image} alt={name} /> 
-            <OtherH2>{species}</OtherH2><OtherH2>{gender}</OtherH2> 
+         {isFav ? (<HearthButton onClick={handleFavorite}>❤️</HearthButton>) : (<HearthButton onClick={handleFavorite}>🤍</HearthButton>)}
+          <ButtonX onClick={() => props.onClose(id)}>X</ButtonX>
+          <NameCard><Link to={`/detail/${props.id}`}style={{textDecoration: 'none', color: 'white'}}>{/*props. de vuelta el destructring para usar solo lo que necesitamos*/props.name}</Link></NameCard> 
+          <ImgBetter  src={props.image} alt={props.name} /> 
+            <OtherH2>{props.species}</OtherH2><OtherH2>{props.gender}</OtherH2> 
       </DivCard>
    );
 }
+export function mapStateToProps(state){
+   return{
+      myFavorites: state.myFavorites
+   }
+}
+export function mapDispatchToProps (dispatch) {
+   return {
+      addCharacter: (character) => {
+       dispatch(addCharacter(character));
+     },
+     removeCharacter: (id) => {
+      dispatch(removeCharacter(id));
+    },
+   };
+ };
+
+ export default connect(mapStateToProps, mapDispatchToProps)(Card)

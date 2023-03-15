@@ -3,7 +3,6 @@ import validate from "./validation"
 import styled from "styled-components"
 
 const FormLogIn = styled.form`
-    border: 1px solid black;
     width: 400px;
     height: 500px;
     display: flex;
@@ -16,19 +15,18 @@ const FormLogIn = styled.form`
     font-family: get_schwifty;      
 `
 const DivUsername = styled.div`
-border: 1px solid black;
-margin-top: 40%
+margin-top: 45%
 `
 const DivPassword = styled.div`
-border: 1px solid black;
 margin-top: 25px;
-margin-bottom: 15%
+margin-bottom: 10%
 `
 const Titles = styled.div`
 position: absolute;
 display:inline-flex;
 padding: 30px;
 margin-left: 22%;
+margin-top: 10%;
 `
 const Title = styled.span`
 display: flex;
@@ -44,6 +42,20 @@ padding-top: 10px;
 `
 const Errors = styled.p`
 color: red;
+`
+const LogInButton = styled.button`
+    margin: 0 auto;
+   height: 3em;
+   width: 7em;  
+   color: white;
+   background-color: green;
+   border-radius: 10px;
+   font-family: get_schwifty;
+   &:hover{
+      cursor: pointer;
+      background-color: green;
+      box-shadow: 7px 10px 70px 34px #08C952;
+   }
 `
 export default function Form ({login}) {
 
@@ -78,12 +90,15 @@ export default function Form ({login}) {
         </Titles>
                 <DivUsername><label htmlFor="username">Username: </label>
                     <input onChange={handleInputChange} type="text" name="username" value={userData.username} />
-                    <Errors>{errors.username}</Errors></DivUsername>
+                    <Errors>{errors.username}</Errors>
+                    </DivUsername>
                 <DivPassword>
                     <label htmlFor="password">Password: </label>
                     <input onChange={handleInputChange} type="password" name="password" value={userData.password} />
-                    <Errors>{errors.password}</Errors></DivPassword>
-                <button type="submit">Log In</button>
+                    <Errors>{errors.username}</Errors>
+                    </DivPassword>
+                    
+                <LogInButton type="submit">Login</LogInButton>
             </FormLogIn>
     )
 }

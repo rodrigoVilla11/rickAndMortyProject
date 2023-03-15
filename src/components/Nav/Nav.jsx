@@ -63,6 +63,7 @@ export default function Nav(props, {logOut}) {
       <div>
         <AboutAndHome ><NavLink to="/home" style={{textDecoration: 'none', color: 'white'}}>Home</NavLink></AboutAndHome>
         <AboutAndHome><NavLink to="/about" style={{textDecoration: 'none', color: 'white'}}>About</NavLink></AboutAndHome>
+        <AboutAndHome><NavLink to='/favorites' style={{textDecoration: 'none', color: 'white'}}>My Favorites</NavLink></AboutAndHome>
         </div>
       <Titles>
         <Title>RICK</Title> <TitleAnd>AND</TitleAnd> <Title>MORTY</Title>
