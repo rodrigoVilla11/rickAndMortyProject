@@ -93,10 +93,12 @@ export default function Form ({login}) {
                     </DivUsername>
                 <DivPassword>
                     <label htmlFor="password">Password: </label>
-                    <input onChange={handleInputChange} type="password" name="password" value={userData.password} />
+                    <input onChange={handleInputChange} type="text" name="password" value={userData.password} />
                     </DivPassword>
                     <Errors> 
                         {errors.username}
+                    </Errors> 
+                    <Errors> 
                         {errors.password}
                     </Errors>
                 <LogInButton type="submit">Login</LogInButton>
