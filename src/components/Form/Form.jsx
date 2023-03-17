@@ -15,6 +15,11 @@ const FormLogIn = styled.form`
     &:hover {
         box-shadow: 7px 10px 70px 34px #08C952;
     }
+    @media (max-width: 600px){
+      width: 200px;
+      height: 400px;
+      margin: 80px auto;
+    }
 `
 const DivUsername = styled.div`
 margin-top: 45%
@@ -29,18 +34,27 @@ display:inline-flex;
 padding: 30px;
 margin-left: 22%;
 margin-top: 10%;
+@media (max-width: 600px){
+  margin-left: 5%;
+  margin-top: 7%;
+}
 `
 const Title = styled.span`
 display: flex;
 color: white;
 font-size: 2em;
-
+@media (max-width: 600px){
+  font-size: 1.7em;
+}
 `
 const TitleAnd = styled.span`
 display: flex;
 color: white;
 font-size: 1em;
 padding-top: 10px;
+@media (max-width: 600px){
+  font-size: 0.8em;
+}
 `
 const Errors = styled.p`
 color: red;
