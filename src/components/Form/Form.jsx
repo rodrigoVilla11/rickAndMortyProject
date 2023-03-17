@@ -1,5 +1,5 @@
-import { useState } from "react"
-import validate from "./validation"
+import React, {useState, useEffect } from "react"
+import {validateUsername, validatePassword} from "./validation"
 import styled from "styled-components"
 
 const FormLogIn = styled.form`
@@ -7,12 +7,16 @@ const FormLogIn = styled.form`
     height: 500px;
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
+    margin: 30px auto;
     position: relative;  
     background: linear-gradient(#160440,#000000 50% 65%, #08C952 );
     color: white;
-    box-shadow: 7px 10px 70px 34px #08C952;
-    font-family: get_schwifty;      
+    box-shadow: 7px 10px 70px 34px #EDCF6B;
+    font-family: get_schwifty;  
+    &:hover {
+        box-shadow: 7px 10px 70px 34px #08C952;
+    }
+        
 `
 const DivUsername = styled.div`
 margin-top: 45%
@@ -48,13 +52,12 @@ const LogInButton = styled.button`
    height: 3em;
    width: 7em;  
    color: white;
-   background-color: green;
+   background-color: #160440;
    border-radius: 10px;
    font-family: get_schwifty;
    &:hover{
       cursor: pointer;
       background-color: green;
-      box-shadow: 7px 10px 70px 34px #08C952;
    }
 `
 export default function Form ({login}) {
@@ -69,18 +72,23 @@ export default function Form ({login}) {
     })
 
     const handleInputChange = (e) => {
-      validate({
-                ...userData,
-                  [e.target.name]: e.target.value
-              }, errors, setErrors)
-        setUserData({
-                ...userData,
-                  [e.target.name]: e.target.value
-              })
-    }
+        const { name, value } = e.target;
+        setUserData((prevState) => ({
+          ...prevState,
+          [name]: value,
+        }));
+      };
+      
+      useEffect(() => {
+        const newErrors = { ...errors };
+        validateUsername(userData, newErrors, setErrors);
+        validatePassword(userData, newErrors, setErrors);
+        console.log("New errors:", newErrors);
+      }, [userData, setErrors]);
     
     const handleSubmit = (e) => {
         e.preventDefault()
+        if(!errors.username && !errors.password)
         login(userData);
     }
     return (
@@ -88,8 +96,9 @@ export default function Form ({login}) {
             <Titles>
             <Title>RICK</Title> <TitleAnd>AND</TitleAnd> <Title>MORTY</Title>
         </Titles>
-                <DivUsername><label htmlFor="username">Username: </label>
-                    <input onChange={handleInputChange} type="text" name="username" value={userData.username} />     
+                <DivUsername>
+                <label htmlFor="username">Username: </label>
+                    <input onChange={handleInputChange} type="text" name="username" value={userData.username} />  
                     </DivUsername>
                 <DivPassword>
                     <label htmlFor="password">Password: </label>
