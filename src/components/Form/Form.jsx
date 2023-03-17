@@ -1,5 +1,4 @@
-import React, {useState, useEffect } from "react"
-import {validateUsername, validatePassword} from "./validation"
+import { useState } from "react"
 import styled from "styled-components"
 
 const FormLogIn = styled.form`
@@ -7,16 +6,15 @@ const FormLogIn = styled.form`
     height: 500px;
     display: flex;
     flex-direction: column;
-    margin: 30px auto;
+    margin: 0 auto;
     position: relative;  
     background: linear-gradient(#160440,#000000 50% 65%, #08C952 );
-    color: white;
+    color: white;    
     box-shadow: 7px 10px 70px 34px #EDCF6B;
     font-family: get_schwifty;  
     &:hover {
         box-shadow: 7px 10px 70px 34px #08C952;
     }
-        
 `
 const DivUsername = styled.div`
 margin-top: 45%
@@ -58,9 +56,13 @@ const LogInButton = styled.button`
    &:hover{
       cursor: pointer;
       background-color: green;
+      box-shadow: 7px 10px 70px 34px #08C952;
    }
 `
 export default function Form ({login}) {
+
+    const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{3})+$/;
+    const regexPassword = /^(?=.*?[a-z])(?=.*?[0-9]).{6,10}$/;
 
     const [userData, setUserData] = useState({
         username:'',
@@ -71,24 +73,44 @@ export default function Form ({login}) {
         password:''
     })
 
+    const validateEmail = (email) => {
+        if (!email) {
+          return "Email vacío";
+        } else if (!regexEmail.test(email) || email.length > 35) {
+          return "Email inválido";
+        } else {
+          return "";
+        }
+      };
+
+      const validatePassword = (password) => {
+        if (!password) {
+          return "Password vacío";
+        } else if (!regexPassword.test(password)) {
+          return "Password inválido";
+        } else {
+          return "";
+        }
+      };
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setUserData((prevState) => ({
-          ...prevState,
-          [name]: value,
-        }));
-      };
-      
-      useEffect(() => {
-        const newErrors = { ...errors };
-        validateUsername(userData, newErrors, setErrors);
-        validatePassword(userData, newErrors, setErrors);
-        console.log("New errors:", newErrors);
-      }, [userData, setErrors]);
+    setUserData((prevState) => ({ ...prevState, [name]: value }));
+
+    switch (name) {
+      case "username":
+        setErrors((prevState) => ({ ...prevState, username: validateEmail(value) }));
+        break;
+      case "password":
+        setErrors((prevState) => ({ ...prevState, password: validatePassword(value) }));
+        break;
+      default:
+        break;
+    }
+    }
     
     const handleSubmit = (e) => {
         e.preventDefault()
-        if(!errors.username && !errors.password)
         login(userData);
     }
     return (
@@ -96,9 +118,8 @@ export default function Form ({login}) {
             <Titles>
             <Title>RICK</Title> <TitleAnd>AND</TitleAnd> <Title>MORTY</Title>
         </Titles>
-                <DivUsername>
-                <label htmlFor="username">Username: </label>
-                    <input onChange={handleInputChange} type="text" name="username" value={userData.username} />  
+                <DivUsername><label htmlFor="username">Username: </label>
+                    <input onChange={handleInputChange} type="text" name="username" value={userData.username} />     
                     </DivUsername>
                 <DivPassword>
                     <label htmlFor="password">Password: </label>
