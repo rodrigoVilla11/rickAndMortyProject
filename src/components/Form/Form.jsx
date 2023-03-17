@@ -6,7 +6,7 @@ const FormLogIn = styled.form`
     height: 500px;
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
+    margin: 30px auto;
     position: relative;  
     background: linear-gradient(#160440,#000000 50% 65%, #08C952 );
     color: white;    
@@ -56,7 +56,6 @@ const LogInButton = styled.button`
    &:hover{
       cursor: pointer;
       background-color: green;
-      box-shadow: 7px 10px 70px 34px #08C952;
    }
 `
 export default function Form ({login}) {
