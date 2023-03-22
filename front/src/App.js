@@ -34,9 +34,9 @@ function App () {
 }, [access]);
 
   const onSearch = (character) => {
-    const KEY = '86334f583361.82f001e1c09131539161'
-    const URL_BASE = "https://be-a-rym.up.railway.app/api";
-    fetch(`${URL_BASE}/character/${character}?key=${KEY}`)
+    //const KEY = '86334f583361.82f001e1c09131539161'
+    const URL_BASE = "http://localhost:3001/rickandmorty";
+    fetch(`${URL_BASE}/character/${character}`)
        .then((response) => response.json())
        .then((data) => {
           if (data.name && !characters.find((char) => char.id === data.id)) {
