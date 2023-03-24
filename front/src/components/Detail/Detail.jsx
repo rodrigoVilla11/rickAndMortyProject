@@ -41,9 +41,9 @@ export default function Detail(props)
     }, [id]);
     
       return(
-        /*<TotalDiv>*/<div className={styles.TotalDiv}>
+        <div className={styles.TotalDiv}>
           {
-            infoDetail.id ? /*FrontAndBack*/<div className={styles.FrontAndBack}>
+            infoDetail.id ? <div className={styles.FrontAndBack}>
               <div className={styles.Back}>
               <h5>Name: {infoDetail.name}</h5>
               <h5>Status: {infoDetail.status}</h5>
@@ -57,8 +57,8 @@ export default function Detail(props)
               </div>
               
 
-            </div>/*FrontAndBack*/  : <Loading><LoadingText>Loading...</LoadingText></Loading>
+            </div>  : <Loading><LoadingText>Loading...</LoadingText></Loading>
           }
-        </div> //TotalDiv
+        </div>
       )
 }

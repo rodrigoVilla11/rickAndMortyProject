@@ -1,21 +1,18 @@
-var http = require("http");
-var characters= require("./utils/data");
+const http = require("http");
+const getCharById = require("./controllers/getCharById.js")
+const getCharDetails = require("./controllers/getCharDetail") 
+require('dotenv').config();
 
 
 http.createServer(function(req, res) {
   const {url} = req
   res.setHeader('Access-Control-Allow-Origin', '*');
-  if (url.includes('rickandmorty/character')) {
-    let id = url.split('/').at(-1)
-    let character = characters.find(char => char.id == id);
+  const id = url.split('/').at(-1)
 
-    if(character){
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    return res.end(JSON.stringify(character))
-  }else{
-    res.writeHead(404, {'Content-Type': 'application/json'});
-    return res.end(JSON.stringify({error: 'character not found'}))
+  if(url.includes('onsearch')){
+    getCharById(res, id);
   }
-}
-  
+  if(url.includes('detail')){
+    getCharDetails(res, id)
+  }
 }).listen(3001, 'localhost');

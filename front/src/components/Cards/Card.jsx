@@ -73,33 +73,34 @@ margin-right: 30%;
 `
 
 
- export function Card(props, {id, name, species, gender, image, onClose}) { //usar destructuring para directamene agarrar lo que necesitamos
+ export function Card({id, name, species, gender, image, onClose, addCharacter, removeCharacter, myFavorites,}) { //usar destructuring para directamene agarrar lo que necesitamos
    const [isFav, setIsFav] = useState(false)
+   
   const handleFavorite = () => {
       if (isFav) {
          setIsFav(false);
-         props.removeCharacter(props.id);
+         removeCharacter(id);
       }else{
          setIsFav(true);
-         props.addCharacter(props);
+         addCharacter({id, name, species, gender, image, onClose, addCharacter, removeCharacter});
       }
    }
 
    useEffect(() => {
-      props.myFavorites.forEach((fav) => {
-         if (fav.id === props.id) {
+      myFavorites.forEach((fav) => {
+         if (fav.id === id) {
             setIsFav(true);
          }
       });
-   }, [props.myFavorites]);
+   }, [myFavorites]);
 
    return (
       <DivCard>
          {isFav ? (<HearthButton onClick={handleFavorite}><span className={styles.heart}>❤️</span></HearthButton>) : (<HearthButton onClick={handleFavorite}><span>🤍</span></HearthButton>)}
-          <ButtonX onClick={() => props.onClose(id)}>X</ButtonX>
-          <NameCard><Link to={`/detail/${props.id}`}style={{textDecoration: 'none', color: 'white'}}>{/*props. de vuelta el destructring para usar solo lo que necesitamos*/props.name}</Link></NameCard> 
-          <ImgBetter  src={props.image} alt={props.name} /> 
-            <OtherH2>{props.species}</OtherH2><OtherH2>{props.gender}</OtherH2> 
+          <ButtonX onClick={() => onClose(id)}>X</ButtonX>
+          <NameCard><Link to={`/detail/${id}`}style={{textDecoration: 'none', color: 'white'}}>{/*props. de vuelta el destructring para usar solo lo que necesitamos*/name}</Link></NameCard> 
+          <ImgBetter  src={image} alt={name} /> 
+            <OtherH2>{species}</OtherH2><OtherH2>{gender}</OtherH2> 
       </DivCard>
    );
 }
