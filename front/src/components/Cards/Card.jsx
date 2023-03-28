@@ -4,6 +4,7 @@ import styles from './beatingHeart.module.css'
 import { Link } from 'react-router-dom'
 import {addCharacter, removeCharacter} from   '../../redux/actions'
 import { connect } from 'react-redux'
+import axios from 'axios'
 
 const DivCard = styled.div`
    border: solid 1px;
@@ -73,16 +74,36 @@ margin-right: 30%;
 `
 
 
- export function Card({id, name, species, gender, image, onClose, addCharacter, removeCharacter, myFavorites,}) { //usar destructuring para directamene agarrar lo que necesitamos
+ export function Card({id, name, species, gender, image, onClose, myFavorites,}) { //usar destructuring para directamene agarrar lo que necesitamos
    const [isFav, setIsFav] = useState(false)
    
+   const addCharacter = async (character) => {
+      try{const response = await axios.post('http://localhost:3001/rickandmorty/fav', character)
+      console.log('ok')}
+      catch(error){
+         return {error: error.message}
+      }
+   };
+   const removeCharacter = async (character) =>{
+     try{ const response = await axios.delete(`http://localhost:3001/rickandmorty/fav/${id}`, character)}
+     catch(error){
+      return {error: error.message}
+   }
+   }
+   const getFavorites = async (character) =>{
+        try{ const response = await axios.get(`http://localhost:3001/rickandmorty/fav`, character)}
+        catch(error){
+         return {error: error.message}
+      }
+      }
+
   const handleFavorite = () => {
       if (isFav) {
          setIsFav(false);
          removeCharacter(id);
       }else{
          setIsFav(true);
-         addCharacter({id, name, species, gender, image, onClose, addCharacter, removeCharacter});
+         addCharacter({id, name, species, gender, image});
       }
    }
 
@@ -109,15 +130,4 @@ export function mapStateToProps(state){
       myFavorites: state.myFavorites
    }
 }
-export function mapDispatchToProps (dispatch) {
-   return {
-      addCharacter: (character) => {
-       dispatch(addCharacter(character));
-     },
-     removeCharacter: (id) => {
-      dispatch(removeCharacter(id));
-    },
-   };
- };
-
- export default connect(mapStateToProps, mapDispatchToProps)(Card)
+ export default connect(mapStateToProps)(Card)

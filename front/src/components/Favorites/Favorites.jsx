@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { filterCards, orderCards } from "../../redux/actions";
 
+
 const GlobalDiv = styled.div`
 `
 
@@ -37,7 +38,7 @@ const Favorites = () => {
     const handleFilterCards = (e) => {
         dispatch(filterCards(e.target.value))
     }
-
+    
     return(
         <GlobalDiv><FavoritesTitle>Favorites</FavoritesTitle>
         <div><select name="" onChange={handleOrderCards}>

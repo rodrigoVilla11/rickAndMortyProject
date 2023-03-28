@@ -13,16 +13,16 @@ router.get('/onsearch/:id', getCharById);
 
 //*********************************************************
 
-router.post('/rickandmorty/favs', (req, res) => {
+router.post('/fav', (req, res) => {
    favs.push(req.body);
    res.status(200).json({status: 'ok'})
 })
 
-router.get('/rickandmorty/favs', (req, res) => {
+router.get('/fav', (req, res) => {
     res.status(200).json(favs)
 })
 
-router.delete('/rickandmorty/favs/:id', (req, res) => {
+router.delete('/fav/:id', (req, res) => {
     const {id} = req.params;
     favs = favs.filter(char=> char.id != id)
     res.status(200).json({status: 'ok'})
