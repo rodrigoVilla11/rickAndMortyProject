@@ -35,8 +35,13 @@ function App () {
 
   const onSearch = (character) => {
     //const KEY = '86334f583361.82f001e1c09131539161'
-    const URL_BASE = "http://localhost:3001/rickandmorty/onsearch";
-    fetch(`${URL_BASE}/${character}`)
+    const URL_BASE = "http://localhost:3001/rickandmorty";
+
+    if (characters.find((char) => char.character === character)) {
+      return alert("Personaje repetido");
+    }
+
+    fetch(`${URL_BASE}/onsearch/${character}`)
        .then((response) => response.json())
        .then((data) => {
           if (data.name && !characters.find((char) => char.id === data.id)) {

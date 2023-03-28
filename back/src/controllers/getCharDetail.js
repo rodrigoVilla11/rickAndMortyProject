@@ -3,16 +3,16 @@ const axios = require('axios');
 const URL = 'http://be-a-rym.up.railway.app/api';
 const KEY = '86334f583361.82f001e1c09131539161'
 
-const getCharDetail = (res, ID) => {
-    axios.get(`${URL}/character/${ID}?key=${KEY}`).then((response) => {
-        const {image, name, gender, status, origin, species} = response.data;
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify({image, name, gender,status, origin, species}))
-    })
-    .catch(err => {
-        res.writeHead(500, {'Content-Type': 'text/plain'});
-        res.end(err.message)
+const getCharDetail = (req, res) => {
+    
+    const {detailId} = req.params;
+    
+    axios.get(`${URL}/character/${detailId}?key=${KEY}`)
+    .then(response => {
+        const {id, name, species, image, gender, origin} = response.data;
+        res.status(200).json({id, name, species, image, gender, origin})
+    }).catch((error) => {
+        res.status(500).json({error: error.message})
     })
 }
-
 module.exports = getCharDetail;

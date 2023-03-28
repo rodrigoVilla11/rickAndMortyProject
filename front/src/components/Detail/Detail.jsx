@@ -23,9 +23,9 @@ export default function Detail(props)
 
 
     useEffect(() => {
-      const KEY = '86334f583361.82f001e1c09131539161'
-    const URL_BASE = "https://be-a-rym.up.railway.app/api";
-    fetch(`${URL_BASE}/character/${id}?key=${KEY}`)
+    //   const KEY = '86334f583361.82f001e1c09131539161'
+    // const URL_BASE = "https://be-a-rym.up.railway.app/api";
+    fetch(`http://localhost:3001/rickandmorty/detail/${id}`)
         .then((response) => response.json())
         .then((char) => {
           if (char.name) {

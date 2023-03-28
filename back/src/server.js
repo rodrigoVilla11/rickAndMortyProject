@@ -1,18 +1,19 @@
-const http = require("http");
-const getCharById = require("./controllers/getCharById.js")
-const getCharDetails = require("./controllers/getCharDetail") 
-require('dotenv').config();
+require("dotenv").config();
+const express = require('express');
+const router = require('./routes');
+const morgan = require('morgan')
+const cors = require("cors")
 
+const server = express();
+server.use(express.json())
+server.use(morgan('dev'));
+server.use(cors())
 
-http.createServer(function(req, res) {
-  const {url} = req
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  const id = url.split('/').at(-1)
+server.use('/rickandmorty', router)
 
-  if(url.includes('onsearch')){
-    getCharById(res, id);
-  }
-  if(url.includes('detail')){
-    getCharDetails(res, id)
-  }
-}).listen(3001, 'localhost');
+const PORT = process.env.PORT || 3001;
+//res.setHeader('Access-Control-Allow-Origin', '*')
+
+server.listen(PORT, ()=>{
+  console.log(`listening on port ${PORT}`);
+})
