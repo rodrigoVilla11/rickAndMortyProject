@@ -25,4 +25,4 @@ return (
 </Total>
 <div><Title2>Mi nombre es Rodrigo Villarreal, soy un estudiante de soyHenry, terminando el M2 y por arrancar con confianza y muchas ganas el M3</Title2></div>
 </div>
-)} 
+)}

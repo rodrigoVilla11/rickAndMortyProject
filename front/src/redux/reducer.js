@@ -1,9 +1,9 @@
 import {
-	ADD_CHARACTER,
+	GET_CHARACTER,
 	REMOVE_CHARACTER,
 	FILTER,
 	ORDER,
-	GET_CHARACTER,
+	CLEANFAV,
 } from "./actions";
 
 export const initialState = {
@@ -13,6 +13,12 @@ export const initialState = {
 
 const rootReducer = (state = initialState, action) => {
 	switch (action.type) {
+		case GET_CHARACTER:
+			return {
+				...state,
+				myFavorites: [...state.myFavorites, ...action.payload],
+				allCharacters: [...state.myFavorites, ...action.payload],
+			};
 		case REMOVE_CHARACTER:
 			return {
 				...state,
@@ -37,10 +43,11 @@ const rootReducer = (state = initialState, action) => {
 					}),
 				],
 			};
-		case GET_CHARACTER:
+		case CLEANFAV:
 			return {
 				...state,
-				myFavorites: [...state.myFavorites, ...action.payload],
+				myFavorites: [],
+				allCharacters: [],
 			};
 		default:
 			return { ...state };

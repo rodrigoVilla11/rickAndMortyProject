@@ -13,7 +13,6 @@ flex-wrap: wrap;
 `
 
 export default function Cards({characters, onClose}) {
-   
    return <DivOtherCharacters>
       {characters.map(({id, name, species, gender, image,})=>{
          return <OtherCharacters>

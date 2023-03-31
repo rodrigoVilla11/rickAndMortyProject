@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import styles from './beatingHeart.module.css'
 import { Link } from 'react-router-dom'
-//import {addCharacter, removeCharacter} from   '../../redux/actions'
-import { connect } from 'react-redux'
+import {addCharacter, removeCharacter} from   '../../redux/actions'
+import { connect, useDispatch } from 'react-redux'
 import axios from 'axios'
 
 const DivCard = styled.div`
@@ -74,35 +74,21 @@ margin-right: 30%;
 `
 
 
-export function Card({id, name, species, gender, image, onClose, myFavorites}) { //usar destructuring para directamene agarrar lo que necesitamos
+ export function Card({id, name, species, gender, image, onClose, myFavorites}) { //usar destructuring para directamene agarrar lo que necesitamos
    const [isFav, setIsFav] = useState(false)
-   
-   const addCharacter = async (character) => {
-      try{ await axios.post('http://localhost:3001/rickandmorty/fav', character)
-      console.log('ok')}
-      catch(error){
-         return {error: error.message}
-      }
-   };
-   const removeCharacter = async (id) =>{
-     try{ await axios.delete(`http://localhost:3001/rickandmorty/fav/${id}`)}
-     catch(error){
-      return {error: error.message}
-   }
-   }
-   
+   const dispatch = useDispatch()
 
   const handleFavorite = () => {
       if (isFav) {
          setIsFav(false);
-         removeCharacter(id);
+         dispatch(removeCharacter(id));
       }else{
          setIsFav(true);
-         addCharacter({id, name, species, gender, image});
+         dispatch(addCharacter({id, name, species, gender, image}));
       }
    }
 
-   useEffect(() => { //CREO QUE NO SE USA MAS
+   useEffect(() => {
       myFavorites.forEach((fav) => {
          if (fav.id === id) {
             setIsFav(true);
