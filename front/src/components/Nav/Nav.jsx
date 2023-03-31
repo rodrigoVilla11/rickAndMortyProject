@@ -3,6 +3,29 @@ import SearchBar from './SearchBar.jsx'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 
+export default function Nav(props, {logOut}) {
+
+    return <NavBar>
+      <DivHomeAbout>
+        <AboutAndHome ><NavLink to="/home" style={{textDecoration: 'none', color: 'white'}}>Home</NavLink></AboutAndHome>
+        <AboutAndHome><NavLink to="/about" style={{textDecoration: 'none', color: 'white'}}>About</NavLink></AboutAndHome>
+        <AboutAndHome><NavLink to='/favorites' style={{textDecoration: 'none', color: 'white'}}>My Favorites</NavLink></AboutAndHome>
+        </DivHomeAbout>
+      <Titles>
+        <Title>RICK</Title> <TitleAnd>AND</TitleAnd> <Title>MORTY</Title>
+      </Titles>
+      <DivForSearch>
+        <ButtonMenu>Menu</ButtonMenu>
+    <SearchBar
+      onSearch={props.onSearch}
+    />
+    <NavLink to='/'>
+    <ButtonLogOut /*onClick={()=>logOut()}*/>Log Out</ButtonLogOut></NavLink>
+    </DivForSearch>
+  </NavBar>
+}
+
+
 const NavBar = styled.nav`
 position: relative;
 display: flex;
@@ -101,24 +124,3 @@ font-family: get_schwifty;
 }
 
 `
-export default function Nav(props, {logOut}) {
-
-    return <NavBar>
-      <DivHomeAbout>
-        <AboutAndHome ><NavLink to="/home" style={{textDecoration: 'none', color: 'white'}}>Home</NavLink></AboutAndHome>
-        <AboutAndHome><NavLink to="/about" style={{textDecoration: 'none', color: 'white'}}>About</NavLink></AboutAndHome>
-        <AboutAndHome><NavLink to='/favorites' style={{textDecoration: 'none', color: 'white'}}>My Favorites</NavLink></AboutAndHome>
-        </DivHomeAbout>
-      <Titles>
-        <Title>RICK</Title> <TitleAnd>AND</TitleAnd> <Title>MORTY</Title>
-      </Titles>
-      <DivForSearch>
-        <ButtonMenu>Menu</ButtonMenu>
-    <SearchBar
-      onSearch={props.onSearch}
-    />
-    <NavLink to='/'>
-    <ButtonLogOut /*onClick={()=>logOut()}*/>Log Out</ButtonLogOut></NavLink>
-    </DivForSearch>
-  </NavBar>
-}

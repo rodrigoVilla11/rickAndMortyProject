@@ -5,29 +5,6 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { getCharacter, filterCards, orderCards, cleanFavs } from "../../redux/actions";
 
-
-const GlobalDiv = styled.div`
-`
-
-const FavoritesTitle = styled.h1`
-position: relative;
-margin-top: 5px;
-color: black;
-border-color: white;
-font-family: get_schwifty;
-font-size: 3em;
-text-shadow: 4px 4px 2px rgba(8,201,82,0.6);
-margin-bottom: 0;
-`
-const OtherCharacters = styled.div`
-display: flex;   
-`
-const DivOtherCharacters = styled.div`
-display: flex;
-justify-content: space-evenly;
-flex-wrap: wrap;
-`
-
 const Favorites = () => {
     const favorites = useSelector((state) => state.myFavorites)
     const dispatch = useDispatch();
@@ -60,7 +37,7 @@ const Favorites = () => {
             </select>
             </div>
         <DivOtherCharacters>
-            {favorites.map(({id, name, species, gender, image})=>{
+            {favorites.map(({id, name, species, gender, image, key})=>{
          return <OtherCharacters>
         <Card  
         id = {id}
@@ -76,3 +53,27 @@ const Favorites = () => {
     }
 
 export default Favorites;
+
+
+
+const GlobalDiv = styled.div`
+`
+
+const FavoritesTitle = styled.h1`
+position: relative;
+margin-top: 5px;
+color: black;
+border-color: white;
+font-family: get_schwifty;
+font-size: 3em;
+text-shadow: 4px 4px 2px rgba(8,201,82,0.6);
+margin-bottom: 0;
+`
+const OtherCharacters = styled.div`
+display: flex;   
+`
+const DivOtherCharacters = styled.div`
+display: flex;
+justify-content: space-evenly;
+flex-wrap: wrap;
+`

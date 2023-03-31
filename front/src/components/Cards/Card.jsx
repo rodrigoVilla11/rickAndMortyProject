@@ -4,9 +4,47 @@ import styles from './beatingHeart.module.css'
 import { Link } from 'react-router-dom'
 import {addCharacter, removeCharacter} from   '../../redux/actions'
 import { connect, useDispatch } from 'react-redux'
-import axios from 'axios'
 
-const DivCard = styled.div`
+ export function Card({id, name, species, gender, image, onClose, myFavorites}) { 
+   const [isFav, setIsFav] = useState(false)
+   const dispatch = useDispatch()
+
+  const handleFavorite = () => {
+      if (isFav) {
+         setIsFav(false);
+         dispatch(removeCharacter(id));
+      }else{
+         setIsFav(true);
+         dispatch(addCharacter({id, name, species, gender, image}));
+      }
+   }
+
+   useEffect(() => {
+      myFavorites.forEach((fav) => {
+         if (fav.id === id) {
+            setIsFav(true);
+         }
+      });
+   }, [myFavorites, id]);
+
+   return (
+      <DivCard>
+         {isFav ? (<HearthButton onClick={handleFavorite}><span className={styles.heart}>❤️</span></HearthButton>) : (<HearthButton onClick={handleFavorite}><span>🤍</span></HearthButton>)}
+          <ButtonX onClick={() => onClose(id)}>X</ButtonX>
+          <NameCard><Link to={`/detail/${id}`}style={{textDecoration: 'none', color: 'white'}}>{name}</Link></NameCard> 
+          <ImgBetter  src={image} alt={name} /> 
+            <OtherH2>{species}</OtherH2><OtherH2>{gender}</OtherH2> 
+      </DivCard>
+   );
+}
+export function mapStateToProps(state){
+   return{
+      myFavorites: state.myFavorites
+   }
+}
+ export default connect(mapStateToProps)(Card)
+
+ const DivCard = styled.div`
    border: solid 1px;
    width: 200px;
    heigth: 300px;
@@ -72,43 +110,3 @@ margin-right: 30%;
    cursor: pointer;
 }
 `
-
-
- export function Card({id, name, species, gender, image, onClose, myFavorites}) { //usar destructuring para directamene agarrar lo que necesitamos
-   const [isFav, setIsFav] = useState(false)
-   const dispatch = useDispatch()
-
-  const handleFavorite = () => {
-      if (isFav) {
-         setIsFav(false);
-         dispatch(removeCharacter(id));
-      }else{
-         setIsFav(true);
-         dispatch(addCharacter({id, name, species, gender, image}));
-      }
-   }
-
-   useEffect(() => {
-      myFavorites.forEach((fav) => {
-         if (fav.id === id) {
-            setIsFav(true);
-         }
-      });
-   }, [myFavorites]);
-
-   return (
-      <DivCard>
-         {isFav ? (<HearthButton onClick={handleFavorite}><span className={styles.heart}>❤️</span></HearthButton>) : (<HearthButton onClick={handleFavorite}><span>🤍</span></HearthButton>)}
-          <ButtonX onClick={() => onClose(id)}>X</ButtonX>
-          <NameCard><Link to={`/detail/${id}`}style={{textDecoration: 'none', color: 'white'}}>{/*props. de vuelta el destructring para usar solo lo que necesitamos*/name}</Link></NameCard> 
-          <ImgBetter  src={image} alt={name} /> 
-            <OtherH2>{species}</OtherH2><OtherH2>{gender}</OtherH2> 
-      </DivCard>
-   );
-}
-export function mapStateToProps(state){
-   return{
-      myFavorites: state.myFavorites
-   }
-}
- export default connect(mapStateToProps)(Card)

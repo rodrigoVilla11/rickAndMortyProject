@@ -1,6 +1,23 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
+export default function SearchBar({onSearch}) {
+
+   const [id, setId] = useState('')
+
+   const handleChange = (event) => {
+      setId(event.target.value);
+   } 
+
+   return (
+      <>
+         <InputSearch type='search' onChange={handleChange}/>
+      <SearchButton onClick={() => onSearch(id)}>Agregar</SearchButton> 
+      </>
+   ); 
+}
+
+
 
 const InputSearch = styled.input`
    height: 3em;
@@ -19,19 +36,3 @@ const SearchButton = styled.button`
       background-color: green;
    }
 `
-
-export default function SearchBar({onSearch}) {
-
-   const [id, setId] = useState('')
-
-   const handleChange = (event) => {
-      setId(event.target.value);
-   } 
-
-   return (
-      <>
-         <InputSearch type='search' onChange={handleChange}/>
-      <SearchButton onClick={() => onSearch(id)}>Agregar</SearchButton> 
-      </>
-   ); 
-}

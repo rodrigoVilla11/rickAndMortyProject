@@ -3,18 +3,6 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import styles from './Detail.module.css'
 
-const Loading = styled.div`
-  width: auto;
-  height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 15px;
-`
-const LoadingText = styled.h5`
-font-size: 5em;
-font-family: get_schwifty
-`
 export default function Detail(props)
 {
     const {id} = useParams();
@@ -23,8 +11,6 @@ export default function Detail(props)
 
 
     useEffect(() => {
-    //   const KEY = '86334f583361.82f001e1c09131539161'
-    // const URL_BASE = "https://be-a-rym.up.railway.app/api";
     fetch(`http://localhost:3001/rickandmorty/detail/${id}`)
         .then((response) => response.json())
         .then((char) => {
@@ -62,3 +48,16 @@ export default function Detail(props)
         </div>
       )
 }
+
+const Loading = styled.div`
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+`
+const LoadingText = styled.h5`
+font-size: 5em;
+font-family: get_schwifty
+`

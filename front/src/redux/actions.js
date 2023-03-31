@@ -7,10 +7,7 @@ export const CLEANFAV = "CLEANFAV";
 
 export const addCharacter = async (character) => {
 	try {
-		const response = await axios.post(
-			"http://localhost:3001/rickandmorty/fav",
-			character
-		);
+		await axios.post("http://localhost:3001/rickandmorty/fav", character);
 		console.log("ok");
 	} catch (error) {
 		return { error: error.message };
@@ -24,7 +21,6 @@ export const getCharacter = (character) => {
 			.then((res) => res.data)
 			.then((data) => dispatch({ type: GET_CHARACTER, payload: data }));
 	};
-	//return { type: ADD_CHARACTER, payload: character };
 };
 
 export const removeCharacter = (id) => {

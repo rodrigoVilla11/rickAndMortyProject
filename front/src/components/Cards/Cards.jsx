@@ -2,19 +2,9 @@ import React from 'react'
 import Card from './Card';
 import styled from 'styled-components'
 
-const OtherCharacters = styled.div`
-display: flex;
-
-`
-const DivOtherCharacters = styled.div`
-display: flex;
-justify-content: space-evenly;
-flex-wrap: wrap;
-`
-
 export default function Cards({characters, onClose}) {
    return <DivOtherCharacters>
-      {characters.map(({id, name, species, gender, image,})=>{
+      {characters.map(({id, name, species, gender, image})=>{
          return <OtherCharacters>
         <Card  
         id = {id}
@@ -28,3 +18,14 @@ export default function Cards({characters, onClose}) {
       })}
    </DivOtherCharacters>;
 }
+
+const OtherCharacters = styled.div`
+display: flex;
+
+`
+const DivOtherCharacters = styled.div`
+display: flex;
+justify-content: space-evenly;
+flex-wrap: wrap;
+`
+

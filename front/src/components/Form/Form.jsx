@@ -1,79 +1,9 @@
 import { useState } from "react"
 import styled from "styled-components"
 
-const FormLogIn = styled.form`
-    width: 400px;
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-    margin: 30px auto;
-    position: relative;  
-    background: linear-gradient(#160440,#000000 50% 65%, #08C952 );
-    color: white;    
-    box-shadow: 7px 10px 70px 34px #EDCF6B;
-    font-family: get_schwifty;  
-    &:hover {
-        box-shadow: 7px 10px 70px 34px #08C952;
-    }
-    @media (max-width: 600px){
-      width: 200px;
-      height: 400px;
-      margin: 80px auto;
-    }
-`
-const DivUsername = styled.div`
-margin-top: 45%
-`
-const DivPassword = styled.div`
-margin-top: 25px;
-margin-bottom: 10%
-`
-const Titles = styled.div`
-position: absolute;
-display:inline-flex;
-padding: 30px;
-margin-left: 22%;
-margin-top: 10%;
-@media (max-width: 600px){
-  margin-left: 5%;
-  margin-top: 7%;
-}
-`
-const Title = styled.span`
-display: flex;
-color: white;
-font-size: 2em;
-@media (max-width: 600px){
-  font-size: 1.7em;
-}
-`
-const TitleAnd = styled.span`
-display: flex;
-color: white;
-font-size: 1em;
-padding-top: 10px;
-@media (max-width: 600px){
-  font-size: 0.8em;
-}
-`
-const Errors = styled.p`
-color: red;
-`
-const LogInButton = styled.button`
-    margin: 0 auto;
-   height: 3em;
-   width: 7em;  
-   color: white;
-   background-color: #160440;
-   border-radius: 10px;
-   font-family: get_schwifty;
-   &:hover{
-      cursor: pointer;
-      background-color: green;
-   }
-`
 export default function Form ({login}) {
 
+    // eslint-disable-next-line
     const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{3})+$/;
     const regexPassword = /^(?=.*?[a-z])(?=.*?[0-9]).{6,10}$/;
 
@@ -148,3 +78,75 @@ export default function Form ({login}) {
             </FormLogIn>
     )
 }
+
+const FormLogIn = styled.form`
+    width: 400px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    margin: 30px auto;
+    position: relative;  
+    background: linear-gradient(#160440,#000000 50% 65%, #08C952 );
+    color: white;    
+    box-shadow: 7px 10px 70px 34px #EDCF6B;
+    font-family: get_schwifty;  
+    &:hover {
+        box-shadow: 7px 10px 70px 34px #08C952;
+    }
+    @media (max-width: 600px){
+      width: 200px;
+      height: 400px;
+      margin: 80px auto;
+    }
+`
+const DivUsername = styled.div`
+margin-top: 45%
+`
+const DivPassword = styled.div`
+margin-top: 25px;
+margin-bottom: 10%
+`
+const Titles = styled.div`
+position: absolute;
+display:inline-flex;
+padding: 30px;
+margin-left: 22%;
+margin-top: 10%;
+@media (max-width: 600px){
+  margin-left: 5%;
+  margin-top: 7%;
+}
+`
+const Title = styled.span`
+display: flex;
+color: white;
+font-size: 2em;
+@media (max-width: 600px){
+  font-size: 1.7em;
+}
+`
+const TitleAnd = styled.span`
+display: flex;
+color: white;
+font-size: 1em;
+padding-top: 10px;
+@media (max-width: 600px){
+  font-size: 0.8em;
+}
+`
+const Errors = styled.p`
+color: red;
+`
+const LogInButton = styled.button`
+    margin: 0 auto;
+   height: 3em;
+   width: 7em;  
+   color: white;
+   background-color: #160440;
+   border-radius: 10px;
+   font-family: get_schwifty;
+   &:hover{
+      cursor: pointer;
+      background-color: green;
+   }
+`
