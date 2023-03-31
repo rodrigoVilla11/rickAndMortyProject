@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import styles from './beatingHeart.module.css'
 import { Link } from 'react-router-dom'
-import {addCharacter, removeCharacter} from   '../../redux/actions'
+//import {addCharacter, removeCharacter} from   '../../redux/actions'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
@@ -74,28 +74,23 @@ margin-right: 30%;
 `
 
 
- export function Card({id, name, species, gender, image, onClose, myFavorites,}) { //usar destructuring para directamene agarrar lo que necesitamos
+export function Card({id, name, species, gender, image, onClose, myFavorites}) { //usar destructuring para directamene agarrar lo que necesitamos
    const [isFav, setIsFav] = useState(false)
    
    const addCharacter = async (character) => {
-      try{const response = await axios.post('http://localhost:3001/rickandmorty/fav', character)
+      try{ await axios.post('http://localhost:3001/rickandmorty/fav', character)
       console.log('ok')}
       catch(error){
          return {error: error.message}
       }
    };
-   const removeCharacter = async (character) =>{
-     try{ const response = await axios.delete(`http://localhost:3001/rickandmorty/fav/${id}`, character)}
+   const removeCharacter = async (id) =>{
+     try{ await axios.delete(`http://localhost:3001/rickandmorty/fav/${id}`)}
      catch(error){
       return {error: error.message}
    }
    }
-   const getFavorites = async (character) =>{
-        try{ const response = await axios.get(`http://localhost:3001/rickandmorty/fav`, character)}
-        catch(error){
-         return {error: error.message}
-      }
-      }
+   
 
   const handleFavorite = () => {
       if (isFav) {
@@ -107,7 +102,7 @@ margin-right: 30%;
       }
    }
 
-   useEffect(() => {
+   useEffect(() => { //CREO QUE NO SE USA MAS
       myFavorites.forEach((fav) => {
          if (fav.id === id) {
             setIsFav(true);

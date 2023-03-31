@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Card from "../Cards/Card";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { filterCards, orderCards } from "../../redux/actions";
+import { filterCards, orderCards, getFavorites } from "../../redux/actions";
 
 
 const GlobalDiv = styled.div`
@@ -32,6 +32,8 @@ const Favorites = () => {
     const favorites = useSelector((state) => state.myFavorites)
     const dispatch = useDispatch();
 
+   useEffect(() => dispatch(getFavorites()), [dispatch])
+
     const handleOrderCards = (e) =>{
         dispatch(orderCards(e.target.value))
     }
@@ -42,12 +44,12 @@ const Favorites = () => {
     return(
         <GlobalDiv><FavoritesTitle>Favorites</FavoritesTitle>
         <div><select name="" onChange={handleOrderCards}>
-            <option value="">Choose One</option>
+            <option value="">Show All</option>
             <option value="Ascendente">Ascendente </option>
             <option value="Descendente">Descendente</option>
             </select>
             <select name="" onChange={handleFilterCards}>
-            <option value="">Choose One</option>
+            <option value="">Show All</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Genderless">Genderless</option>
