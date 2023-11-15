@@ -1,17 +1,18 @@
 const { DataTypes } = require("sequelize");
 
-module.exports = (sequelize) => {
+function UserModel(sequelize) {
 	sequelize.define(
 		"User",
 		{
 			id: {
 				type: DataTypes.INTEGER,
-				allowNull: false,
 				primaryKey: true,
+				autoIncrement: true,
 			},
 			email: {
 				type: DataTypes.STRING,
 				allowNull: false,
+				unique: true,
 				validate: {
 					isEmail: true,
 				},
@@ -23,4 +24,5 @@ module.exports = (sequelize) => {
 		},
 		{ timestamps: false }
 	);
-};
+}
+module.exports = UserModel;

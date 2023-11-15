@@ -16,6 +16,6 @@ const PORT = process.env.PORT || 3001;
 //res.setHeader('Access-Control-Allow-Origin', '*')
 
 server.listen(PORT, () => {
-	console.log(`listening on port ${PORT}`);
 	conn.sync();
+	console.log(`listening on port ${PORT}`);
 });
