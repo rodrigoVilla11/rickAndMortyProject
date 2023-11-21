@@ -2,30 +2,38 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import styles from './beatingHeart.module.css'
 import { Link } from 'react-router-dom'
-import {addCharacter, removeCharacter} from   '../../redux/actions'
-import { connect, useDispatch } from 'react-redux'
+import {postCharacters, deleteCharacters} from   '../../redux/myFavoritesAction'
+import { connect, useDispatch, useSelector} from 'react-redux'
 
  export function Card({id, name, species, gender, image, onClose, myFavorites}) { 
+   const favorites = useSelector((state) => state.myFavorites)
+
    const [isFav, setIsFav] = useState(false)
    const dispatch = useDispatch()
 
-  const handleFavorite = () => {
+   const localST = JSON.parse(localStorage.getItem("user"));
+	const user = JSON.stringify(localST.username);
+
+
+  const  handleFavorite = async () => {
       if (isFav) {
          setIsFav(false);
-         dispatch(removeCharacter(id));
+         dispatch(deleteCharacters(id, user));
       }else{
          setIsFav(true);
-         dispatch(addCharacter({id, name, species, gender, image}));
+         dispatch(postCharacters({ id, name, species, gender, image, user }));
       }
    }
+   const allFavorites = favorites.myFavorites
+
 
    useEffect(() => {
-      myFavorites.forEach((fav) => {
+      allFavorites.forEach((fav) => {
          if (fav.id === id) {
             setIsFav(true);
          }
       });
-   }, [myFavorites, id]);
+   }, [favorites, id]);
 
    return (
       <DivCard>

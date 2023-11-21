@@ -4,33 +4,54 @@ import Nav from "./components/Nav/Nav";
 import About from "./components/About/About.jsx";
 import Detail from "./components/Detail/Detail";
 import Form from "./components/Form/Form";
+import Register from "./components/Form/Register";
 import Favorites from "./components/Favorites/Favorites";
 import { useState, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function App() {
 	const navigate = useNavigate();
 	const [characters, setCharacters] = useState([]);
 
-	const [access, setAccess] = useState(false);
-	const username = "villarrealrodrigo.n@gmail.com";
-	const password = "Rvilla11";
+	const [access, setAccess] = useState({
+		access: false,
+		username: "",
+	});
 
-	function login(userData) {
-		if (userData.password === password && userData.username === username) {
-			setAccess(true);
+	async function login(userData) {
+		let isAllow = await axios
+			.post(`http://localhost:3001/rickandmorty/login`, userData)
+			.then((res) => res.data)
+			.catch((e) => console.log(e));
+
+		if (isAllow.access === true) {
+			window.localStorage.setItem("user", JSON.stringify(isAllow));
 			navigate("/home");
 		} else {
 			alert("Invalid username or password");
 		}
 	}
 	function logOut() {
-		setAccess(false);
+		window.localStorage.setItem(
+			"user",
+			JSON.stringify({ access: false, username: "" })
+		);
+
 		navigate("/");
 	}
 
+	async function register(userData) {
+		let registerData = await axios
+			.post(`http://localhost:3001/rickandmorty/register`, userData)
+			.then((res) => res.data)
+			.catch((e) => console.log(e));
+
+		console.log(registerData);
+	}
+
 	useEffect(() => {
-		!access && navigate("/");
+		!window.localStorage.user.access && navigate("/");
 	}, [access]);
 
 	const onSearch = (character) => {
@@ -59,16 +80,22 @@ function App() {
 
 	return (
 		<div className="App" style={{ padding: "25px" }}>
-			{location.pathname !== "/" && <Nav onSearch={onSearch} logOut={logOut} />}
+			{location.pathname !== "/" && location.pathname !== "/register" && (
+				<Nav onSearch={onSearch} logOut={logOut} />
+			)}
 			<Routes>
 				<Route path="/" element={<Form login={login} />} />
+				<Route path="/register" element={<Register register={register} />} />
 				<Route
 					path="/home"
 					element={<Cards characters={characters} onClose={onClose} />}
 				/>
 				<Route path="/detail/:id" element={<Detail />} />
 				<Route path="/about" element={<About />} />
-				<Route path="/favorites" element={<Favorites />} />
+				<Route
+					path="/favorites"
+					element={<Favorites access={access.username} />}
+				/>
 			</Routes>
 		</div>
 	);

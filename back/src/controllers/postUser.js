@@ -1,11 +1,10 @@
 const { User } = require("../DB_connection");
 
 const postUser = async (req, res) => {
-	const { email, password } = req.body;
-	console.log({ email, password });
+	const { username, password } = req.body;
 	{
-		if (!email || !password) throw Error("Faltan Datos");
-		await User.create({ email, password });
+		if (!username || !password) throw Error("Faltan Datos");
+		await User.create({ email: username, password });
 		res.status(200).send({ msg: "created" });
 	}
 };

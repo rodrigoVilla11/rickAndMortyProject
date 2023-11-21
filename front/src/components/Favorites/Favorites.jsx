@@ -3,15 +3,21 @@ import { useSelector } from "react-redux";
 import Card from "../Cards/Card";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { getCharacter, filterCards, orderCards, cleanFavs } from "../../redux/actions";
+import { filterCards, orderCards } from "../../redux/actions";
+import {getCharacters} from "../../redux/myFavoritesAction"
+
 
 const Favorites = () => {
     const favorites = useSelector((state) => state.myFavorites)
     const dispatch = useDispatch();
+
+    const localST = JSON.parse(localStorage.getItem("user"));
+	const user = JSON.stringify(localST.username);
+        
+
     useEffect(()=>{
-        dispatch(cleanFavs())
-        dispatch(getCharacter())
-    },[dispatch])
+        dispatch(getCharacters(user))
+    },[user])
 
     const handleOrderCards = (e) =>{
         dispatch(orderCards(e.target.value))
@@ -19,6 +25,7 @@ const Favorites = () => {
     const handleFilterCards = (e) => {
         dispatch(filterCards(e.target.value))
     }
+    const allFavorites = favorites.myFavorites
     
     return(
         <GlobalDiv><FavoritesTitle>Favorites</FavoritesTitle>
@@ -37,7 +44,7 @@ const Favorites = () => {
             </select>
             </div>
         <DivOtherCharacters>
-            {favorites.map(({id, name, species, gender, image, key})=>{
+            { allFavorites.map(({id, name, species, gender, image, key})=>{
          return <OtherCharacters>
         <Card  
         id = {id}
@@ -47,8 +54,9 @@ const Favorites = () => {
         image = {image}
         key ={id}
         /></OtherCharacters>
-      })}
-        </DivOtherCharacters></GlobalDiv>
+      })} 
+        </DivOtherCharacters>
+        </GlobalDiv>
     )
     }
 

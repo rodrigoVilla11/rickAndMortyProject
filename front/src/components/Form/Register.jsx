@@ -1,9 +1,11 @@
 import { useState } from "react"
 import styled from "styled-components"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
-export default function Form ({login, register}) {
+export default function Register ({register}) {
+
+    const navigate = useNavigate()
 
     // eslint-disable-next-line
     const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{3})+$/;
@@ -56,7 +58,8 @@ export default function Form ({login, register}) {
     
     const handleSubmit = (e) => {
         e.preventDefault()
-        login(userData);
+        register(userData);
+        navigate("/")
     }
     return (
        <FormLogIn onSubmit={handleSubmit}>
@@ -77,8 +80,8 @@ export default function Form ({login, register}) {
                         {errors.password}
                     </Errors>
         <p>Login with the default data</p>
-                <LogInButton type="submit">Login</LogInButton>
-                <Link to={'/register'}><LogInButton >Register </LogInButton></Link>
+                <Link to={'/'}><LogInButton > Back </LogInButton></Link>
+                <LogInButton type="submit">Register</LogInButton>
             </FormLogIn>
     )
 }

@@ -16,8 +16,8 @@ const rootReducer = (state = initialState, action) => {
 		case GET_CHARACTER:
 			return {
 				...state,
-				myFavorites: [...state.myFavorites, ...action.payload],
-				allCharacters: [...state.myFavorites, ...action.payload],
+				myFavorites: [...state.myFavorites, action.payload],
+				allCharacters: [...state.myFavorites, action.payload],
 			};
 		case REMOVE_CHARACTER:
 			return {

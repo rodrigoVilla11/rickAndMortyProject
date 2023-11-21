@@ -5,25 +5,30 @@ export const FILTER = "FILTER";
 export const ORDER = "ORDER";
 export const CLEANFAV = "CLEANFAV";
 
-export const addCharacter = async (character) => {
+export const addCharacter = async (user) => {
 	try {
-		await axios.post("http://localhost:3001/rickandmorty/fav", character);
+		await axios.post("http://localhost:3001/rickandmorty/fav", user);
 		console.log("ok");
 	} catch (error) {
 		return { error: error.message };
 	}
 };
 
-export const getCharacter = (character) => {
+export const getCharacter = (user) => {
 	return (dispatch) => {
 		axios
-			.get("http://localhost:3001/rickandmorty/fav")
-			.then((res) => res.data)
-			.then((data) => dispatch({ type: GET_CHARACTER, payload: data }));
+			.get("http://localhost:3001/rickandmorty/fav", {
+				params: {
+					user: user,
+				},
+			})
+			.then((res) => console.log(res.data))
+			.then((data) => dispatch({ type: GET_CHARACTER, payload: data }))
+			.catch((error) => console.log(error));
 	};
 };
 
-export const removeCharacter = (id) => {
+export const removeCharacter = (id, user) => {
 	return async (dispatch) => {
 		await axios.delete(`http://localhost:3001/rickandmorty/fav/${id}`);
 
