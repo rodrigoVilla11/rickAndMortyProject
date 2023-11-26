@@ -4,15 +4,21 @@ export const myFavoritesSlice = createSlice({
 	name: "myFavorites",
 	initialState: {
 		myFavorites: [],
-		detail: {},
 	},
 	reducers: {
 		getAllFavorites: (state, action) => {
 			state.myFavorites = action.payload;
 		},
+		filterFavorites: (state, action) => {
+			state.myFavorites = action.payload;
+		},
+		orderFavorites: (state, action) => {
+			state.myFavorites = action.payload;
+		},
 	},
 });
 
-export const { getAllFavorites } = myFavoritesSlice.actions;
+export const { getAllFavorites, filterFavorites, orderFavorites } =
+	myFavoritesSlice.actions;
 
 export default myFavoritesSlice.reducer;

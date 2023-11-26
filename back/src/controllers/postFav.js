@@ -1,4 +1,4 @@
-const { Favorite, User } = require("../DB_connection");
+const { User } = require("../DB_connection");
 
 const postFav = async (req, res) => {
 	const { id, name, image, species, gender, user } = req.body;
@@ -6,20 +6,23 @@ const postFav = async (req, res) => {
 	try {
 		if (!name || !image || !species || !gender)
 			return res.status(401).send("Faltan datos");
-		const favorite = await Favorite.create({
+		const favorite = {
 			id,
 			name,
 			image,
 			species,
 			gender,
-		});
+		};
 		const userAdd = await User.findOne({ where: { email: JSON.parse(user) } });
 
 		if (!userAdd) {
 			return res.status(404).json({ error: "Usuario no encontrado" });
 		}
+		await userAdd.update({
+			favorites: [...userAdd.favorites, favorite],
+		});
 
-		await userAdd.addFavorite(favorite);
+		await userAdd.save();
 
 		res
 			.status(200)

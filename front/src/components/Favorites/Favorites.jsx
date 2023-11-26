@@ -3,8 +3,7 @@ import { useSelector } from "react-redux";
 import Card from "../Cards/Card";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { filterCards, orderCards } from "../../redux/actions";
-import {getCharacters} from "../../redux/myFavoritesAction"
+import {getCharacters, filterCards, orderCards} from "../../redux/myFavoritesAction"
 
 
 const Favorites = () => {
@@ -14,34 +13,40 @@ const Favorites = () => {
     const localST = JSON.parse(localStorage.getItem("user"));
 	const user = JSON.stringify(localST.username);
         
-
+    const allFavorites = favorites.myFavorites
     useEffect(()=>{
         dispatch(getCharacters(user))
-    },[user])
+    },[user, dispatch])
 
     const handleOrderCards = (e) =>{
-        dispatch(orderCards(e.target.value))
+        const value = e.target.value
+        dispatch(orderCards(value, allFavorites))
     }
     const handleFilterCards = (e) => {
-        dispatch(filterCards(e.target.value))
+        dispatch(filterCards(e.target.value, allFavorites))
     }
-    const allFavorites = favorites.myFavorites
+    const handleRefresh = (e) => {
+        e.preventDefault()
+        dispatch(getCharacters(user))
+    }
+
+   
     
     return(
         <GlobalDiv><FavoritesTitle>Favorites</FavoritesTitle>
         <div><select name="" onChange={handleOrderCards}>
-            <option value="">Choose One</option>
-            <option value="Ascendente">Ascendente </option>
+            <option selected disabled>Choose One</option>
+            <option value="Ascendente">Ascendente</option>
             <option value="Descendente">Descendente</option>
             </select>
             <select name="" onChange={handleFilterCards}>
-            <option value="">Choose One</option>
+            <option selected disabled>Choose One</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Genderless">Genderless</option>
             <option value="unknown">unknown</option>
-
             </select>
+            <button onClick={handleRefresh}>Refresh</button>
             </div>
         <DivOtherCharacters>
             { allFavorites.map(({id, name, species, gender, image, key})=>{

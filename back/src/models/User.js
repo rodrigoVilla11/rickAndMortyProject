@@ -21,8 +21,13 @@ function UserModel(sequelize) {
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
+			favorites: {
+				type: DataTypes.ARRAY(DataTypes.JSONB),
+				defaultValue: [],
+			},
 		},
 		{ timestamps: false }
 	);
 }
+
 module.exports = UserModel;

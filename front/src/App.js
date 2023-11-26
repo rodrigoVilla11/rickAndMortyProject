@@ -9,10 +9,12 @@ import Favorites from "./components/Favorites/Favorites";
 import { useState, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 function App() {
 	const navigate = useNavigate();
 	const [characters, setCharacters] = useState([]);
+	const dispatch = useDispatch();
 
 	const [access, setAccess] = useState({
 		access: false,
@@ -37,7 +39,6 @@ function App() {
 			"user",
 			JSON.stringify({ access: false, username: "" })
 		);
-
 		navigate("/");
 	}
 

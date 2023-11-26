@@ -38,7 +38,7 @@ import { connect, useDispatch, useSelector} from 'react-redux'
    return (
       <DivCard>
          {isFav ? (<HearthButton onClick={handleFavorite}><span className={styles.heart}>❤️</span></HearthButton>) : (<HearthButton onClick={handleFavorite}><span>🤍</span></HearthButton>)}
-          <ButtonX onClick={() => onClose(id)}>X</ButtonX>
+          {onClose ? <ButtonX onClick={() => onClose(id)}>X</ButtonX>: ""}
           <NameCard><Link to={`/detail/${id}`}style={{textDecoration: 'none', color: 'white'}}>{name}</Link></NameCard> 
           <ImgBetter  src={image} alt={name} /> 
             <OtherH2>{species}</OtherH2><OtherH2>{gender}</OtherH2> 

@@ -3,7 +3,6 @@ const { Favorite, User } = require("../DB_connection");
 const deleteFav = async (req, res) => {
 	const { id } = req.params;
 	const { user } = req.query;
-	console.log(user);
 	try {
 		const userAdd = await User.findOne({ where: { email: JSON.parse(user) } });
 
@@ -11,9 +10,13 @@ const deleteFav = async (req, res) => {
 			return res.status(404).json({ error: "Usuario no encontrado" });
 		}
 
-		const character = await Favorite.findByPk(id);
+		const arrayFiltered = userAdd.favorites.filter(
+			(favorite) => favorite.id !== id
+		);
 
-		await userAdd.removeFavorite(character);
+		userAdd.favorites = arrayFiltered;
+
+		await userAdd.save();
 
 		res.status(200).json({ status: "deleted" });
 	} catch (err) {
