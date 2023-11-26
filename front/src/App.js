@@ -53,9 +53,8 @@ function App() {
 
 	useEffect(() => {
 		{
-			window.localStorage.user.access &&
-				!window.localStorage.user.access &&
-				navigate("/");
+			window.localStorage.setItem("user", access);
+			!window.localStorage.user.access && navigate("/");
 		}
 	}, [access]);
 
