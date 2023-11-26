@@ -23,7 +23,7 @@ function App() {
 
 	async function login(userData) {
 		let isAllow = await axios
-			.post(`http://localhost:3001/rickandmorty/login`, userData)
+			.post(`/login`, userData)
 			.then((res) => res.data)
 			.catch((e) => console.log(e));
 
@@ -44,7 +44,7 @@ function App() {
 
 	async function register(userData) {
 		let registerData = await axios
-			.post(`http://localhost:3001/rickandmorty/register`, userData)
+			.post(`/register`, userData)
 			.then((res) => res.data)
 			.catch((e) => console.log(e));
 
@@ -57,7 +57,7 @@ function App() {
 
 	const onSearch = (character) => {
 		//const KEY = '86334f583361.82f001e1c09131539161'
-		const URL_BASE = "http://localhost:3001/rickandmorty";
+		const URL_BASE = "https://rickandmorty-24f4.onrender.com/rickandmorty";
 
 		if (characters.find((char) => char.character === character)) {
 			return alert("Personaje repetido");

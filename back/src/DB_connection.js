@@ -7,7 +7,16 @@ const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 // URL ----> postgres://DB_USER:DB_PASSWORD@DB_HOST/rickandmorty
 const sequelize = new Sequelize(
 	`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/verceldb`,
-	{ logging: false, native: false }
+	{
+		logging: false,
+		native: false,
+		dialectOptions: {
+			ssl: {
+				require: true,
+				rejectUnauthorized: false, // Asegúrate de entender las implicaciones de desactivar la verificación del certificado en un entorno de producción.
+			},
+		},
+	}
 );
 
 FavoriteModel(sequelize);

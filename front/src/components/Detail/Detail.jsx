@@ -11,7 +11,7 @@ export default function Detail(props)
 
 
     useEffect(() => {
-    fetch(`http://localhost:3001/rickandmorty/detail/${id}`)
+    fetch(`/detail/${id}`)
         .then((response) => response.json())
         .then((char) => {
           if (char.name) {
