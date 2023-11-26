@@ -52,7 +52,11 @@ function App() {
 	}
 
 	useEffect(() => {
-		!window.localStorage.user.access && navigate("/");
+		{
+			window.localStorage.user.access &&
+				!window.localStorage.user.access &&
+				navigate("/");
+		}
 	}, [access]);
 
 	const onSearch = (character) => {
